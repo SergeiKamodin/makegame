@@ -124,7 +124,7 @@ void setup1(){}
 
 void loop()
 {
-    gfx.render(gamePong);
+    
 }
 
 void loop1()

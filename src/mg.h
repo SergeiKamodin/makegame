@@ -29,14 +29,15 @@ private:
     /* Correction on the y0-axis. */
     const int8_t CORR_Y0{100}, CORR_Y1{100}, CORR_X0{100}, CORR_X1{100};
     /* Initial setting of coordinates. */
-    int COOR_Y0 = HEIGHT_LCD / 2; 
+    int COOR_Y0 = HEIGHT_LCD / 2;
     int COOR_Y1 = HEIGHT_LCD / 2;
-    int COOR_X0 = WIDTH_LCD  / 2;
-    int COOR_X1 = WIDTH_LCD  / 2;
+    int COOR_X0 = WIDTH_LCD / 2;
+    int COOR_X1 = WIDTH_LCD / 2;
     /* Reset the counter of objects. */
     int OBJ_Y0{}, OBJ_Y1{}, OBJ_X0{}, OBJ_X1{};
     /* Raw data from Sticks. */
     int RAW_DATA_Y0{}, RAW_DATA_Y1{}, RAW_DATA_X0{}, RAW_DATA_X1{};
+
 public:
     /* Contains the coordinates of the Sticks along the axes. */
     int calculatePositionX0();
@@ -46,7 +47,7 @@ public:
 
     /* Variables for storing coordinates from the axes of the Sticks. */
     int posX0{}, posY0{}, posX1{}, posY1{};
-    
+
     /* Generates 1 or 0 if the button is pressed or not. */
     bool pressKeyA();
     bool pressKeyB();
@@ -71,7 +72,7 @@ public:
 
     /* Initial display setting. Sets Contrast to 0, analog DC at 12, sets port 8 to 1 */
     void initializationSystem();
-    /* We send the void-function to the display buffer for output. 
+    /* We send the void-function to the display buffer for output.
        The void-function will be completed by time-Delay-interval. */
     void render(void (*f)(), int timeDelay);
     /* We send the void-function to the display buffer for output. */
@@ -82,7 +83,7 @@ public:
        chi-character spacing (6 by default).
        Line break is supported - '\n' */
     void print(String text, int x, int y, int lii, int chi);
-    /* Data output in x, y coordinates. 
+    /* Data output in x, y coordinates.
        Line break is supported - '\n' */
     void print(String text, int x, int y);
     /* Runs a void-function with text-string and output x-y-coordinates parameters.
@@ -95,6 +96,7 @@ class Timer
 protected:
 private:
     unsigned long prevTime{};
+
 public:
     /* Starting a void-function on a interval-timer. */
     void timer(void (*f)(void), int interval);
@@ -122,6 +124,7 @@ class Button : Joystick
 {
 private:
     int xCursor, yCursor;
+
 public:
     /* The button starts the void-function, define the button text-text and output x-y-coordinates.
        xCursor-yCursor-coordinates of interaction with the cursor. */
@@ -145,6 +148,15 @@ public:
     /* Cursor. If the stateCursor status is 1 - visible, if 0 - not visible.
        Determine the coordinates of the Cursor to interact with the selected Stick. */
     bool cursor(bool stateCursor, int xCursor, int yCursor);
+};
+
+class Multitasks
+{
+private:
+public:
+    int32_t timer(); //time
+    bool run();      //for run task
+    bool stop();     //stop the task
 };
 
 #endif
