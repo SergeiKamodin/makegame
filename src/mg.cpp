@@ -9,7 +9,7 @@
 #include <U8g2lib.h> 
 #include "mg.h"
 
-Graphics _gfx;
+Graphics _gfx; Button _yes, _no; 
 
 unsigned long previousMillis = 0;
 unsigned long prevTime_0{};
@@ -633,4 +633,15 @@ void Terminal::terminal()
       }
     }
   }
+}
+
+bool Dialogue::dialogue(bool state, String text)
+{
+    if (state == true)
+    {
+        _gfx.print(text, 5, 10, 10, 6);
+        _yes.button()
+    }
+    else return false;
+
 }

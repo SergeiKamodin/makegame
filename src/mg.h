@@ -147,4 +147,11 @@ public:
     bool cursor(bool stateCursor, int xCursor, int yCursor);
 };
 
+class Dialogue
+{
+    public:
+        bool dialogue(bool state, String text);
+    private:
+};
+
 #endif
