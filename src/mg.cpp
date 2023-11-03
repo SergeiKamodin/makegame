@@ -634,3 +634,8 @@ void Terminal::terminal()
     }
   }
 }
+
+void Applications::applications(String textTop, String textBottom)
+{
+    
+}

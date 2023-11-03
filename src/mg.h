@@ -147,4 +147,11 @@ public:
     bool cursor(bool stateCursor, int xCursor, int yCursor);
 };
 
+class Applications : Joystick, Graphics, Timer, Terminal, Interface, Button, Shortcut, Cursor
+{
+    private:
+    public:
+        void applications(String textTop, String textBottom);
+}
+
 #endif
