@@ -619,7 +619,6 @@ void calcTerminal()
 void Terminal::terminal()
 {
   calcTerminal();
-
   if (Serial.available() != 0)
   {
     char text[10]{};
@@ -635,13 +634,9 @@ void Terminal::terminal()
   }
 }
 
-bool Dialogue::dialogue(bool state, String text)
+void Dialogue::dialogue(String text, String text1, String text2, void (*f1)(void), void (*f2)(void), int x, int y)
 {
-    if (state == true)
-    {
-        _gfx.print(text, 5, 10, 10, 6);
-        _yes.button()
-    }
-    else return false;
-
+    _gfx.print(text, 5, 10, 10, 6);
+    Button.button(text1, 4, 40, f1, x, y);
+    Button.button(text2, 74, 40, f2, x, y);
 }

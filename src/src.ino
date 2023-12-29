@@ -1,11 +1,12 @@
-#include "mg.h"
+#include <mg.h>
 
 Joystick joy;
 Graphics gfx;
-Interface inf;
-Button btn1, btn2, btn3;
 Cursor crs1;
+Dialogue dlg;
 Shortcut iconSapper, iconGears;
+
+bool stateGame = false, dialogue_x = false;;
 
 const uint8_t sapper_bits[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x01, 0x00, 
@@ -67,7 +68,30 @@ void calculate()
         }
     }
 
+    //exit game
+    if ((score1 == 5) || (score2 == 5))
+    {
+      dialogue_x = true;
+      while(dialogue_x)
+      {
+        gfx.render(dlg.dialogue("Play again?", "Yes", "Exit to menu", change_to_true, change_to_false, joy.posX0, joy.posY0));
+      }
+      score1 = 0; score2 = 0;
+    }
+
     //gfx.print((String)sys.s0x + " " + (String)sys.s0y, 30, 30);
+}
+
+void change_to_false()
+{
+    stateGame = false;
+    dialogue_x = false;
+}
+
+void change_to_true()
+{
+    stateGame = true;
+    dialogue_x = false;
 }
 
 void drawRackets()
@@ -93,25 +117,22 @@ void drawScore()
 
 void gamePong()
 {
+    stateGame = true;
     drawField(); drawRackets(); drawBall(); drawScore();
 }
 
-void clickBtn1()
+void interfaceBoard()
 {
-    inf.message("You clicked on\nthe Stick 0 button\n:D", 1500);
+    if (stateGame == false) gfx.render(desctop);
+    if (stateGame == true) gfx.render(gamePong);
 }
 
-void clickBtn2()
-{
-    inf.message("Okay :((", 1500);
-}
-
-void helloBro()
+void desctop()
 {
     joy.updatePositionXY();
-    btn1.button("HELLO", 5, 40, clickBtn1, joy.posX0, joy.posY0); //0
-    iconSapper.shortcut(sapper_bits, 0, 0, NULL, joy.posX1, joy.posY1); //1
-    gfx.print("hello\nworld\nuser!", 65, 10, 8, 4);
+
+    gfx.print("Move the cursor\nto the Pong game\nshortcut", 5, 10, 8, 5);
+    iconSapper.shortcut(sapper_bits, 5, 30, gamePong, joy.posX0, joy.posY0);
     crs1.cursor(true, joy.posX0, joy.posY0);
 }
 
@@ -120,13 +141,17 @@ void setup()
     gfx.initializationSystem();
 }
 
-void setup1(){}
+void setup1()
+{
+    //Your code to run on the second core
+}
 
 void loop()
 {
-    gfx.render(gamePong);
+    interfaceBoard();
 }
 
 void loop1()
-{   
+{  
+    //Your code to run on the second core
 }
