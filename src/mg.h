@@ -131,6 +131,9 @@ public:
     /* The button starts the void-function, define the button text-text and output x-y-coordinates.
        xCursor-yCursor-coordinates of interaction with the cursor. */
     bool button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
+    /* The button starts the void-function, define the button text-text and output x-y-coordinates.
+       xCursor-yCursor-coordinates of interaction with the cursor. */
+    bool button(bool activ, String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
 };
 
 class Shortcut : Joystick

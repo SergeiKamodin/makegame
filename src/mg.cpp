@@ -10,10 +10,14 @@
 #include "mg.h"
 
 //version library
-const int8_t VERSION_LIB[] = {1, 1};
+const int8_t VERSION_LIB[] = {1, 2};
+String infoVersion = "";
 
+//object's
 Graphics _gfx;
+Joystick _joy;
 
+//state OS
 enum StateOs
 {
     /* State OS */
@@ -165,7 +169,7 @@ void Graphics::initializationSystem()
     //--
     u8g2.clearBuffer();
     u8g2.drawXBMP(((WIDTH_LCD - mg_l_w)/2), ((HEIGHT_LCD - mg_l_h)/2), mg_l_w, mg_l_h, mg_l_bits); //56x28 px
-    _gfx.print(6, (String)VERSION_LIB[0] + "." + (String)VERSION_LIB[1] , 0, 63, 10, 4);
+    _gfx.print(7, (String)VERSION_LIB[0] + "." + (String)VERSION_LIB[1] + infoVersion, 0, 63, 10, 4);
     u8g2.sendBuffer();
     //--
     delay(2500);
@@ -368,6 +372,40 @@ bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCur
   {
     u8g2.setDrawColor(1);
     u8g2.drawRFrame(x, y - 8, (sizeText * 5) + 5, 10, 2);
+  }
+
+  u8g2.setCursor(x + 3, y);
+  u8g2.setFont(u8g2_font_profont10_mr);
+  u8g2.setFontMode(1);
+  u8g2.setDrawColor(2);
+  u8g2.print(text);
+  u8g2.setFontMode(0);
+  
+  return false;
+}
+
+bool Button::button(bool activ, String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor)
+{
+  uint8_t sizeText = text.length();
+  uint8_t lengthText = sizeText * 5;
+
+  if ((activ) && (xCursor >= x && xCursor <= (x + lengthText + 4)) && (yCursor >= y - 8 && yCursor <= y + 2))
+  {
+    u8g2.setDrawColor(1);
+    u8g2.drawRBox(x, y - 8, lengthText + 5, 10, 2);
+
+    if (Joystick::pressKeyA() == true)
+    {
+      f();
+      return true;
+    }
+  }
+  else
+  {
+    u8g2.setDrawColor(1);
+    u8g2.drawRFrame(x, y - 8, lengthText + 5, 10, 2);
+    //else not-activ to H-line
+    u8g2.drawHLine(x, y - 5, lengthText + 5);
   }
 
   u8g2.setCursor(x + 3, y);

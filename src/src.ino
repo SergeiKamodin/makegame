@@ -118,7 +118,7 @@ void clickBtn2()
 void helloBro()
 {
     joy.updatePositionXY();
-    btn1.button("OK", 5, 45, clickBtn1, joy.posX0, joy.posY0); //0
+    btn1.button(false, "OK", 5, 45, clickBtn1, joy.posX0, joy.posY0); //0
     iconSapper.shortcut(sapper_bits, 0, 0, clickBtn1, joy.posX0, joy.posY0); //0
     
     gfx.print(5, "hello world user!", 45, 10, 8, 4);
@@ -141,11 +141,9 @@ void setup1()
 
 void loop()
 {
-    gfx.render(gamePong);
-    scr.screensaver(true, 10000);
+    gfx.render(helloBro); scr.screensaver(true, 10000);
 }
 
 void loop1()
 { 
-    trm.terminal();
 }
