@@ -32,7 +32,7 @@ const uint8_t sapper_bits[] = {
   0x00, 0xC0, 0x02, 0x00, 0x00, 0xC0, 0x02, 0x00, 0x00, 0x80, 0x01, 0x00, 
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, };
 
-int8_t ballX{1}, ballY{1}, ballXspeed{1}, ballYspeed{1}, score1{}, score2{};
+int8_t ballX{64}, ballY{32}, ballXspeed{1}, ballYspeed{1}, score1{}, score2{};
 
 void drawField()
 {
@@ -85,9 +85,8 @@ void calculate()
       dialogue_x = true;
       while(dialogue_x)
       {
-        dlg.dialogue("Play again?", "Yes", "No", joy.posX0, joy.posY0);
+        dlg.dialogue("Play again?", "Yes", "No", change_to_true, change_to_false);
       }
-      score1 = 0; score2 = 0;
     }
 
     //gfx.print((String)sys.s0x + " " + (String)sys.s0y, 30, 30); //debug
@@ -116,14 +115,15 @@ void drawScore()
 
 void change_to_false()
 {
-    stateGame = false;
-    dialogue_x = false;
+    dialogue_x = true;
 }
 
 void change_to_true()
 {
-    stateGame = true;
     dialogue_x = false;
+    score1 = 0; score2 = 0;
+    ballX = 64; ballY = 32;
+    ballXspeed = 1; ballYspeed = 1;
 }
 
 

@@ -168,7 +168,7 @@ class Dialogue
 {
     public:
     /* dialogue */
-        void dialogue(String text, String text1, String text2, int x, int y);
+        void dialogue(String text, String text1, String text2, void (*f1)(void), void (*f2)(void));
     private:
 };
 
