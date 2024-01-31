@@ -13,6 +13,7 @@
 const int8_t VERSION_LIB[] = {1, 1};
 
 Graphics _gfx;
+Button _yes, _no;
 
 enum StateOs
 {
@@ -185,8 +186,17 @@ void Graphics::render(void (*f)(), int timeDelay)
         u8g2.sendBuffer();
     } while (millis() < time);
 }
+
 /* data render (full frame) no time delay */
 void Graphics::render(void (*f)())
+{
+      u8g2.clearBuffer();
+      f();
+      u8g2.sendBuffer();
+}
+
+/* data render ...*/
+void Graphics::render(void (*f)(), void (*f1)(), void (*f2)())
 {
       u8g2.clearBuffer();
       f();
@@ -752,4 +762,23 @@ void Screensaver::screensaver(bool state, uint timeUntil)
     }
   }
 }
+
+String Text, Text1, Text2;
+int X, Y;
+
+void showDialogue()
+{
+    _gfx.print(Text, 5, 10, 10, 6);
+    _yes.button(Text1, 4, 40, NULL, X, Y);
+    _no.button(Text2, 74, 40, NULL, X, Y);
+}
                                                                                                                                                
+void Dialogue::dialogue(String text, String text1, String text2, int x, int y)
+{
+    Text = text;
+    Text1 = text1;
+    Text2 = text2;
+    X = x;
+    Y = y;
+    _gfx.render(showDialogue);
+}

@@ -15,6 +15,9 @@ Cursor crs1;
 Shortcut iconSapper, iconGears;
 Screensaver scr;
 Terminal trm;
+Dialogue dlg;
+
+bool stateGame = false, dialogue_x = false;
 
 const uint8_t sapper_bits[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x01, 0x00, 
@@ -76,6 +79,17 @@ void calculate()
         }
     }
 
+    //exit game
+    if ((score1 == 2) || (score2 == 2))
+    {
+      dialogue_x = true;
+      while(dialogue_x)
+      {
+        dlg.dialogue("Play again?", "Yes", "No", joy.posX0, joy.posY0);
+      }
+      score1 = 0; score2 = 0;
+    }
+
     //gfx.print((String)sys.s0x + " " + (String)sys.s0y, 30, 30); //debug
 }
 
@@ -99,6 +113,19 @@ void drawScore()
     gfx.print(score1st, 20, 10);
     gfx.print(score2st, 101, 10);
 }
+
+void change_to_false()
+{
+    stateGame = false;
+    dialogue_x = false;
+}
+
+void change_to_true()
+{
+    stateGame = true;
+    dialogue_x = false;
+}
+
 
 void gamePong()
 {
@@ -142,7 +169,7 @@ void setup1()
 void loop()
 {
     gfx.render(gamePong);
-    scr.screensaver(true, 10000);
+
 }
 
 void loop1()

@@ -76,6 +76,8 @@ public:
     void render(void (*f)(), int timeDelay);
     /* We send the void-function to the display buffer for output. */
     void render(void (*f)());
+    /* We send number of the void-functions to the display buffer for output. */
+    void render(void (*f)(), void (*f1)(), void (*f2)());
     /* Clearing the display buffer. */
     void clear();
     /* Data output in x, y coordinates. Size font 5, 6, 7, 8, 10, 12, 13.
@@ -160,6 +162,14 @@ class Screensaver : Joystick
     public:
         /* Turn off backlight and start infinite loop to pause if (is touched()) */
         void screensaver(bool state, uint timeUntil);
+};
+
+class Dialogue
+{
+    public:
+    /* dialogue */
+        void dialogue(String text, String text1, String text2, int x, int y);
+    private:
 };
 
 #endif
