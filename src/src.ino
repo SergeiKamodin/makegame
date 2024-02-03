@@ -15,6 +15,13 @@ Cursor crs1;
 Shortcut iconSapper, iconGears;
 Screensaver scr;
 Terminal trm;
+<<<<<<< Updated upstream
+=======
+Dialogue dlg;
+Keyboard key;
+
+bool stateGame = false, dialogueActive = false;
+>>>>>>> Stashed changes
 
 const uint8_t sapper_bits[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x01, 0x00, 
@@ -29,7 +36,7 @@ const uint8_t sapper_bits[] = {
   0x00, 0xC0, 0x02, 0x00, 0x00, 0xC0, 0x02, 0x00, 0x00, 0x80, 0x01, 0x00, 
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, };
 
-int8_t ballX{1}, ballY{1}, ballXspeed{1}, ballYspeed{1}, score1{}, score2{};
+int8_t ballX{64}, ballY{32}, ballXspeed{1}, ballYspeed{1}, score1{}, score2{};
 
 void drawField()
 {
@@ -76,7 +83,34 @@ void calculate()
         }
     }
 
+<<<<<<< Updated upstream
     //gfx.print((String)sys.s0x + " " + (String)sys.s0y, 30, 30); //debug
+=======
+    //exit game
+    if ((score1 == 2) || (score2 == 2))
+    {
+        dialogueActive = true;
+        while (dialogueActive)
+        {
+            key.keyboard();
+        }
+    }
+    //gfx.print((String)sys.s0x + " " + (String)sys.s0y, 30, 30); //debug
+}
+
+void playAgainNo()
+{
+    ballX = 64; ballY = 32;
+    ballXspeed = 1; ballYspeed = 1;
+}
+
+void playAgainYes()
+{
+    score1 = 0; score2 = 0;
+    ballX = 64; ballY = 32;
+    ballXspeed = 1; ballYspeed = 1;
+    dialogueActive = false;
+>>>>>>> Stashed changes
 }
 
 void drawRackets()
@@ -142,7 +176,11 @@ void setup1()
 void loop()
 {
     gfx.render(gamePong);
+<<<<<<< Updated upstream
     scr.screensaver(true, 10000);
+=======
+
+>>>>>>> Stashed changes
 }
 
 void loop1()

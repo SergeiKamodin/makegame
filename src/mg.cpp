@@ -11,9 +11,18 @@
 
 //version library
 const int8_t VERSION_LIB[] = {1, 1};
+<<<<<<< Updated upstream
 
 Graphics _gfx;
 
+=======
+
+Graphics _gfx;
+Button _yes, _no, _keys;
+Joystick _joy;
+Cursor _crs;
+
+>>>>>>> Stashed changes
 enum StateOs
 {
     /* State OS */
@@ -185,8 +194,17 @@ void Graphics::render(void (*f)(), int timeDelay)
         u8g2.sendBuffer();
     } while (millis() < time);
 }
+
 /* data render (full frame) no time delay */
 void Graphics::render(void (*f)())
+{
+      u8g2.clearBuffer();
+      f();
+      u8g2.sendBuffer();
+}
+
+/* data render ...*/
+void Graphics::render(void (*f)(), void (*f1)(), void (*f2)())
 {
       u8g2.clearBuffer();
       f();
@@ -752,4 +770,74 @@ void Screensaver::screensaver(bool state, uint timeUntil)
     }
   }
 }
+<<<<<<< Updated upstream
                                                                                                                                                
+=======
+
+/*Dialogue*/
+
+/*global variables of the dialog box*/
+String Text, Text1, Text2;
+int X, Y;
+void (*btnFunc1)();
+void (*btnFunc2)();
+
+/*Displays a dialog with the specified parameters when rendered*/
+void showDialogue()
+{
+    _joy.updatePositionXY();
+    _crs.cursor(true, _joy.posX0, _joy.posY0);
+    _gfx.print(Text, 32, 20, 10, 6);
+    _yes.button(Text1, 34, 50, btnFunc1, _joy.posX0, _joy.posY0);
+    _no.button(Text2, 74, 50, btnFunc2, _joy.posX0, _joy.posY0);
+}
+
+/*Assigns the passed values to the global variables of the dialog box and starts the render*/
+void Dialogue::dialogue(String text, String text1, String text2, void (*f1)(void), void (*f2)(void))
+{
+    Text = text; Text1 = text1; Text2 = text2; btnFunc1 = f1; btnFunc2 = f2;
+    _gfx.render(showDialogue);
+}
+
+/*Keyboard*/
+
+/**/
+char keyboardLetters[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g',
+                            'h', 'i', 'j', 'k' , 'l', 'm', 'n', 'o', 'p', 
+                            'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+char keyboardNumbers[26] = {'1', '2', '3', '4', '5', '6', '6', '8', '9', '0'
+    ' ', ' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', 
+    ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+char keyboardSymbols[26] = {'.', ',', '!', '?', ';',
+    ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+    ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+auto allKeyboards[3] = {keyboardLetters, keyboardNumbers, keyboardSymbols};
+int recentKeyboard = 0, symbolsRow = 0;
+
+/**/
+void printKeyValue()
+{
+    symbolsRow++;
+}
+
+/**/
+void showKeyboard()
+{
+    _keys.button("<", 0, 36, NULL, _joy.posX0, _joy.posY0);
+    _keys.button(allKeyboards[recentKeyboard][5*symbolsRow]+0, 32, 36, printKeyValue, _joy.posX0, _joy.posY0);
+    _keys.button(allKeyboards[recentKeyboard][5*symbolsRow]+1, 54, 36, printKeyValue, _joy.posX0, _joy.posY0);
+    _keys.button(allKeyboards[recentKeyboard][5*symbolsRow]+2, 76, 36, printKeyValue, _joy.posX0, _joy.posY0);
+    _keys.button(allKeyboards[recentKeyboard][5*symbolsRow]+3, 98, 36, printKeyValue, _joy.posX0, _joy.posY0);
+    _keys.button(allKeyboards[recentKeyboard][5*symbolsRow]+4, 120, 36, printKeyValue, _joy.posX0, _joy.posY0);
+    _keys.button(">", 118, 36, NULL, _joy.posX0, _joy.posY0);
+    //_keys.button("Aa", );
+    //_keys.button("123", );
+    //_keys.button("!?.", );
+}
+
+/**/
+void Keyboard::keyboard()
+{
+    _gfx.render(showKeyboard);
+}
+>>>>>>> Stashed changes
