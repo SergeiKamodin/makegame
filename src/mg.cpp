@@ -765,26 +765,27 @@ void Screensaver::screensaver(bool state, uint timeUntil)
   }
 }
 
+/*Dialogue*/
+
+/*global variables of the dialog box*/
 String Text, Text1, Text2;
 int X, Y;
 void (*btnFunc1)();
 void (*btnFunc2)();
 
+/*Displays a dialog with the specified parameters when rendered*/
 void showDialogue()
 {
     _joy.updatePositionXY();
     _crs.cursor(true, _joy.posX0, _joy.posY0);
-    _gfx.print(Text, 35, 20, 10, 6);
+    _gfx.print(Text, 32, 20, 10, 6);
     _yes.button(Text1, 34, 50, btnFunc1, _joy.posX0, _joy.posY0);
     _no.button(Text2, 74, 50, btnFunc2, _joy.posX0, _joy.posY0);
 }
-                                                                                                                                               
+
+/*Assigns the passed values to the global variables of the dialog box and starts the render*/
 void Dialogue::dialogue(String text, String text1, String text2, void (*f1)(void), void (*f2)(void))
 {
-    Text = text;
-    Text1 = text1;
-    Text2 = text2;
-    btnFunc1 = f1;
-    btnFunc2 = f2;
+    Text = text; Text1 = text1; Text2 = text2; btnFunc1 = f1; btnFunc2 = f2;
     _gfx.render(showDialogue);
 }

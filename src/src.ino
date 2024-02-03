@@ -17,7 +17,7 @@ Screensaver scr;
 Terminal trm;
 Dialogue dlg;
 
-bool stateGame = false, dialogue_x = false;
+bool stateGame = false, dialogueActive = false;
 
 const uint8_t sapper_bits[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x01, 0x00, 
@@ -82,14 +82,27 @@ void calculate()
     //exit game
     if ((score1 == 2) || (score2 == 2))
     {
-      dialogue_x = true;
-      while(dialogue_x)
-      {
-        dlg.dialogue("Play again?", "Yes", "No", change_to_true, change_to_false);
-      }
+        dialogueActive = true;
+        while (dialogueActive)
+        {
+            dlg.dialogue("Play again?", "Yes", "No", playAgainYes, playAgainNo);
+        }
     }
-
     //gfx.print((String)sys.s0x + " " + (String)sys.s0y, 30, 30); //debug
+}
+
+void playAgainNo()
+{
+    ballX = 64; ballY = 32;
+    ballXspeed = 1; ballYspeed = 1;
+}
+
+void playAgainYes()
+{
+    score1 = 0; score2 = 0;
+    ballX = 64; ballY = 32;
+    ballXspeed = 1; ballYspeed = 1;
+    dialogueActive = false;
 }
 
 void drawRackets()
@@ -112,20 +125,6 @@ void drawScore()
     gfx.print(score1st, 20, 10);
     gfx.print(score2st, 101, 10);
 }
-
-void change_to_false()
-{
-    dialogue_x = true;
-}
-
-void change_to_true()
-{
-    dialogue_x = false;
-    score1 = 0; score2 = 0;
-    ballX = 64; ballY = 32;
-    ballXspeed = 1; ballYspeed = 1;
-}
-
 
 void gamePong()
 {
