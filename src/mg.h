@@ -164,8 +164,6 @@ class Screensaver : Joystick
         void screensaver(bool state, uint timeUntil);
 };
 
-<<<<<<< Updated upstream
-=======
 class Dialogue
 {
     public:
@@ -179,7 +177,6 @@ class Keyboard
     public:
         void keyboard();
     private:
-}
+};
 
->>>>>>> Stashed changes
 #endif

@@ -11,18 +11,12 @@
 
 //version library
 const int8_t VERSION_LIB[] = {1, 1};
-<<<<<<< Updated upstream
-
-Graphics _gfx;
-
-=======
 
 Graphics _gfx;
 Button _yes, _no, _keys;
 Joystick _joy;
 Cursor _crs;
 
->>>>>>> Stashed changes
 enum StateOs
 {
     /* State OS */
@@ -770,9 +764,6 @@ void Screensaver::screensaver(bool state, uint timeUntil)
     }
   }
 }
-<<<<<<< Updated upstream
-                                                                                                                                               
-=======
 
 /*Dialogue*/
 
@@ -802,34 +793,131 @@ void Dialogue::dialogue(String text, String text1, String text2, void (*f1)(void
 /*Keyboard*/
 
 /**/
-char keyboardLetters[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g',
+
+/*char keyboardLetters[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g',
                             'h', 'i', 'j', 'k' , 'l', 'm', 'n', 'o', 'p', 
                             'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-char keyboardNumbers[26] = {'1', '2', '3', '4', '5', '6', '6', '8', '9', '0'
-    ' ', ' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', 
-    ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+char keyboardNumbers[26] = {'1', '2', '3', '4', '5', '6', '6', '8', '9', '0',
+                            ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 
+                            ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
 char keyboardSymbols[26] = {'.', ',', '!', '?', ';',
-    ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-    ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
-auto allKeyboards[3] = {keyboardLetters, keyboardNumbers, keyboardSymbols};
-int recentKeyboard = 0, symbolsRow = 0;
+                            ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+                            ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+*/
 
-/**/
-void printKeyValue()
+char allKeyboards[4][26] = {{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'},
+                            {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'}, 
+                            {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}, 
+                            {'.', ',', '!', '?', '_', '+', '-', '*', '/', '%', '@', '(', ')', ':', ';', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}};
+int recentKeyboard = 0, symbolsRow = 0;
+String wordFromKeyboard = "";
+
+/*goofy ahh realisation of keys*/
+void printKeyValue1()
 {
-    symbolsRow++;
+    wordFromKeyboard += String(allKeyboards[recentKeyboard][5*symbolsRow + 0]);
+    delay(90);
 }
+void printKeyValue2()
+{
+    wordFromKeyboard += String(allKeyboards[recentKeyboard][5*symbolsRow + 1]);
+    delay(90);
+}
+void printKeyValue3()
+{
+    wordFromKeyboard += String(allKeyboards[recentKeyboard][5*symbolsRow + 2]);
+    delay(90);
+}
+void printKeyValue4()
+{
+    wordFromKeyboard += String(allKeyboards[recentKeyboard][5*symbolsRow + 3]);
+    delay(90);
+}
+void printKeyValue5()
+{
+    wordFromKeyboard += String(allKeyboards[recentKeyboard][5*symbolsRow + 4]);
+    delay(90);
+}
+
+void chageSymbolsRowLeft()
+{
+    if (symbolsRow >= 1)
+    {
+        symbolsRow --;
+    }
+    delay(90);
+}
+void chageSymbolsRowRight()
+{
+    int x = 0;
+    if (recentKeyboard == 0 || recentKeyboard == 1)
+    {
+        x = 3;
+    }
+    else if (recentKeyboard == 2)
+    {
+        x = 1;
+    }
+    else
+    {
+        x = 2;
+    }
+    if (symbolsRow <= x)
+    {
+        symbolsRow ++;
+    }
+    delay(90);
+}
+
+void changeKeyboardType1()
+{
+    if (recentKeyboard == 0)
+    {
+        recentKeyboard = 1;
+    }
+    else{
+        recentKeyboard = 0;
+    }
+    delay(90);
+}
+void changeKeyboardType2()
+{
+    recentKeyboard = 2;
+    delay(90);
+}
+void changeKeyboardType3()
+{
+    recentKeyboard = 3;
+    delay(90);
+}
+
+/*void deleteSymbol()
+{
+    wordFromKeyboard = wordFromKeyboard.substr(0, wordFromKeyboard.length()-2);
+    delay(90);
+}*/
 
 /**/
 void showKeyboard()
 {
-    _keys.button("<", 0, 36, NULL, _joy.posX0, _joy.posY0);
-    _keys.button(allKeyboards[recentKeyboard][5*symbolsRow]+0, 32, 36, printKeyValue, _joy.posX0, _joy.posY0);
-    _keys.button(allKeyboards[recentKeyboard][5*symbolsRow]+1, 54, 36, printKeyValue, _joy.posX0, _joy.posY0);
-    _keys.button(allKeyboards[recentKeyboard][5*symbolsRow]+2, 76, 36, printKeyValue, _joy.posX0, _joy.posY0);
-    _keys.button(allKeyboards[recentKeyboard][5*symbolsRow]+3, 98, 36, printKeyValue, _joy.posX0, _joy.posY0);
-    _keys.button(allKeyboards[recentKeyboard][5*symbolsRow]+4, 120, 36, printKeyValue, _joy.posX0, _joy.posY0);
-    _keys.button(">", 118, 36, NULL, _joy.posX0, _joy.posY0);
+    _joy.updatePositionXY();
+    _crs.cursor(true, _joy.posX0, _joy.posY0);
+
+    _keys.button("Aa", 0, 47, changeKeyboardType1, _joy.posX0, _joy.posY0);
+    _keys.button("123", 17, 47, changeKeyboardType2, _joy.posX0, _joy.posY0);
+    _keys.button("?!&", 39, 47, changeKeyboardType3, _joy.posX0, _joy.posY0);
+    _keys.button("<--", 100, 47, deleteSymbol, _joy.posX0, _joy.posY0);
+
+    _keys.button("<", 0, 58, chageSymbolsRowLeft, _joy.posX0, _joy.posY0);
+
+    _keys.button(String(allKeyboards[recentKeyboard][5*symbolsRow + 0]), 15, 58, printKeyValue1, _joy.posX0, _joy.posY0);
+    _keys.button(String(allKeyboards[recentKeyboard][5*symbolsRow + 1]), 37, 58, printKeyValue2, _joy.posX0, _joy.posY0);
+    _keys.button(String(allKeyboards[recentKeyboard][5*symbolsRow + 2]), 59, 58, printKeyValue3, _joy.posX0, _joy.posY0);
+    _keys.button(String(allKeyboards[recentKeyboard][5*symbolsRow + 3]), 81, 58, printKeyValue4, _joy.posX0, _joy.posY0);
+    _keys.button(String(allKeyboards[recentKeyboard][5*symbolsRow + 4]), 103, 58, printKeyValue5, _joy.posX0, _joy.posY0);
+
+    _keys.button(">", 118, 58, chageSymbolsRowRight, _joy.posX0, _joy.posY0);
+    _gfx.print(wordFromKeyboard, 30, 30);
     //_keys.button("Aa", );
     //_keys.button("123", );
     //_keys.button("!?.", );
@@ -840,4 +928,3 @@ void Keyboard::keyboard()
 {
     _gfx.render(showKeyboard);
 }
->>>>>>> Stashed changes

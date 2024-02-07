@@ -15,13 +15,10 @@ Cursor crs1;
 Shortcut iconSapper, iconGears;
 Screensaver scr;
 Terminal trm;
-<<<<<<< Updated upstream
-=======
 Dialogue dlg;
 Keyboard key;
 
 bool stateGame = false, dialogueActive = false;
->>>>>>> Stashed changes
 
 const uint8_t sapper_bits[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x01, 0x00, 
@@ -83,11 +80,8 @@ void calculate()
         }
     }
 
-<<<<<<< Updated upstream
-    //gfx.print((String)sys.s0x + " " + (String)sys.s0y, 30, 30); //debug
-=======
     //exit game
-    if ((score1 == 2) || (score2 == 2))
+    if ((score1 == 1) || (score2 == 1))
     {
         dialogueActive = true;
         while (dialogueActive)
@@ -110,7 +104,6 @@ void playAgainYes()
     ballX = 64; ballY = 32;
     ballXspeed = 1; ballYspeed = 1;
     dialogueActive = false;
->>>>>>> Stashed changes
 }
 
 void drawRackets()
@@ -176,11 +169,6 @@ void setup1()
 void loop()
 {
     gfx.render(gamePong);
-<<<<<<< Updated upstream
-    scr.screensaver(true, 10000);
-=======
-
->>>>>>> Stashed changes
 }
 
 void loop1()
