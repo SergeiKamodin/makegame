@@ -18,7 +18,7 @@ Terminal trm;
 Dialogue dlg;
 Keyboard key;
 
-bool stateGame = false, dialogueActive = false;
+bool stateGame = false;
 
 const uint8_t sapper_bits[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x01, 0x00, 
@@ -81,13 +81,11 @@ void calculate()
     }
 
     //exit game
-    if ((score1 == 1) || (score2 == 1))
+    if ((score1 == 1) || (score1 == 3))
     {
-        dialogueActive = true;
-        while (dialogueActive)
-        {
-            key.keyboard();
-        }
+        String inputWord = "";
+        inputWord = key.keyboard();
+        inf.message(inputWord, 4500);
     }
     //gfx.print((String)sys.s0x + " " + (String)sys.s0y, 30, 30); //debug
 }
@@ -97,13 +95,11 @@ void playAgainNo()
     ballX = 64; ballY = 32;
     ballXspeed = 1; ballYspeed = 1;
 }
-
 void playAgainYes()
 {
     score1 = 0; score2 = 0;
     ballX = 64; ballY = 32;
     ballXspeed = 1; ballYspeed = 1;
-    dialogueActive = false;
 }
 
 void drawRackets()

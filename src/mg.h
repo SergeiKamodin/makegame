@@ -133,6 +133,7 @@ public:
     /* The button starts the void-function, define the button text-text and output x-y-coordinates.
        xCursor-yCursor-coordinates of interaction with the cursor. */
     bool button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
+    bool buttonForKeyboard(int sizeFont, String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
 };
 
 class Shortcut : Joystick
@@ -175,7 +176,7 @@ class Dialogue
 class Keyboard
 {
     public:
-        void keyboard();
+        String keyboard();
     private:
 };
 
